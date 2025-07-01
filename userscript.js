@@ -1232,6 +1232,7 @@
                 GM_setValue('lastHeroAbbr', activeHeroAbbr);
                 updateTable();
                 createUI();
+                updateDropdownHighlighting();
             });
 
     container.appendChild(btn);
@@ -1313,12 +1314,12 @@
         if (!dropdown) return;
 
         const visibleAbbrs = new Set();
-            for (const hero of getHeroList()) {
-                const isSpecial = RESPAWN_LIST.some(r => r.hero_abbr === hero.abbr && r.x === -1 && r.y === -1);
-                if (isHeroVisibleToPlayer(hero.level, lastPlayerLevel, isSpecial)) {
-                    visibleAbbrs.add(hero.abbr);
-                }
+        for (const hero of getHeroList()) {
+            const isSpecial = RESPAWN_LIST.some(r => r.hero_abbr === hero.abbr && r.x === -1 && r.y === -1);
+            if (isHeroVisibleToPlayer(hero.level, lastPlayerLevel, isSpecial)) {
+                visibleAbbrs.add(hero.abbr);
             }
+        }
 
         dropdown.querySelectorAll('button').forEach(btn => {
             const txt = btn.textContent;
@@ -1330,7 +1331,7 @@
 
             btn.style.background = abbr === activeHeroAbbr
                 ? 'darkgreen'
-                : visibleAbbrs.has(hero.abbr) ? 'gray' : '#444';
+                : visibleAbbrs.has(abbr) ? 'gray' : '#444';
         });
     }
 
